@@ -1,8 +1,30 @@
 import React, { Component } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Home.jsx";
 import Category from "./Category.jsx";
 import Products from "./Products.jsx";
+import Login, { fakeAuth } from "./Login.jsx";
+
+/* PrivateRoute Component Definition */
+const PrivateRoute = ({ component: Component, authed, ...rest }) => {
+    return (
+        <Route
+            {...rest}
+            render={props =>
+                authed === true ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/login",
+                            state: { from: props.location }
+                        }}
+                    />
+                )
+            }
+        />
+    );
+};
 
 /* App Component */
 class App extends Component {
@@ -26,16 +48,11 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/category" component={Category} />
-                    <Route path="/products" component={Products} />
-                    <Route
-                        path="/:id"
-                        render={() => (
-                            <p>
-                                {" "}
-                                I want this text to show up for all routes other
-                                than '/', '/products' and '/category'{" "}
-                            </p>
-                        )}
+                    <Route path="/login" component={Login} />
+                    <PrivateRoute
+                        authed={fakeAuth.isAuthenticated}
+                        path="/products"
+                        component={Products}
                     />
                 </Switch>
             </div>
