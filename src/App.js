@@ -1,26 +1,8 @@
 import React, { Component } from "react";
 import { Link, Route, Switch } from "react-router-dom";
-
-/* Home Component */
-const Home = () => (
-    <div>
-        <h2>Home</h2>
-    </div>
-);
-
-/* Category Component */
-const Category = () => (
-    <div>
-        <h2>Category</h2>
-    </div>
-);
-
-/* Products Component */
-const Products = () => (
-    <div>
-        <h2>Products</h2>
-    </div>
-);
+import Home from "./Home.jsx";
+import Category from "./Category.jsx";
+import Products from "./Products.jsx";
 
 /* App Component */
 class App extends Component {
